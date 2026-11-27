@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../constants.dart';
+
 import '../screens/newsfeed_screen.dart';
-import '../widgets/custom_text.dart';
+import 'notification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,22 +15,32 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
 
+  static const List<String> _titles = ['Kwentuhan', 'Notifications'];
+
+  static const List<Widget> _pages = [NewsFeedScreen(), NotificationScreen()];
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        shadowColor: FB_TEXT_COLOR_WHITE,
-        elevation: 2,
-        title: CustomText(
-          text: 'facebook',
-          fontSize: ScreenUtil().setSp(25),
-          color: FB_PRIMARY,
-          fontFamily: 'Klavika',
+        title: Text(
+          _titles[_selectedIndex],
+          style: TextStyle(
+            fontFamily: 'Klavika',
+            fontSize: ScreenUtil().setSp(24),
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: PageView(
         controller: _pageController,
-        children: const <Widget>[NewsFeedScreen()],
+        children: _pages,
         onPageChanged: (page) {
           setState(() {
             _selectedIndex = page;
@@ -38,29 +48,38 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false, //selected item
-        showUnselectedLabels: false, //unselected item
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
         onTap: _onTappedBar,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.dynamic_feed_outlined),
+            activeIcon: Icon(Icons.dynamic_feed),
+            label: 'Feed',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
+            icon: Icon(Icons.notifications_outlined),
+            activeIcon: Icon(Icons.notifications),
             label: 'Notifications',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            activeIcon: Icon(Icons.person),
+            label: 'Profile',
+          ),
         ],
-        selectedItemColor: FB_PRIMARY,
         currentIndex: _selectedIndex,
       ),
     );
   }
 
   void _onTappedBar(int value) {
-    setState(() {
-      _selectedIndex = value;
-    });
-    _pageController.jumpToPage(value);
+    if (value == 2) return;
+    _pageController.animateToPage(
+      value,
+      duration: const Duration(milliseconds: 220),
+      curve: Curves.easeOut,
+    );
   }
 }
