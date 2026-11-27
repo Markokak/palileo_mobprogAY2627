@@ -12,3 +12,10 @@ Through this experience, I learned that Flutter depends on properly configured d
 
 Laboratory 1: Discussion -
 I encountered an issue with the file name, but it was intentionally modified by our instructor as part of the activity, so we had to identify and fix it ourselves. I also did not have much difficulty adding pictures for the enhancements. However, I struggled with the widget in Enhancement 3 because the updates I made were not appearing, and the output remained the same despite making several changes. To resolve this, I added another file containing reusable code, which helped me implement the necessary changes. After that, I was finally able to apply and complete the enhancement successfully.
+
+Laboratory 2: Discussion -
+During the enhancement, I had trouble getting the bottom navigation bar to appear, even after making
+several changes to the code. I went back through the layout and navigation setup, found what needed
+adjusting, and got it working. I also had an issue with images in my posts. The post showed "Image preview"
+instead of the picture because I had forgotten to provide the imageUrl. Once I added it, the image displayed
+correctly.
